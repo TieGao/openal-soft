@@ -20,6 +20,12 @@
 
 #include "config.h"
 
+#if defined(_MSC_VER) && defined(_M_ARM64)
+// MSVC v143 (14.4x) 优化器对本文件触发 C1001 内部编译器错误（windows ARM64 CI 复现，
+// v142 正常）。源内 pragma 优先于命令行 /O2，对该 TU 关闭优化绕开。
+#pragma optimize("", off)
+#endif
+
 #include <algorithm>
 #include <array>
 #include <chrono>
